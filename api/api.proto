@@ -1,0 +1,258 @@
+syntax = "proto3";
+
+package okcredit.billscan.v1;
+
+option go_package = "github.com/okcredit/billscan/api/go;billscan";
+
+import "google/protobuf/wrappers.proto";
+
+import "google/protobuf/empty.proto";
+
+message Relation {
+    string id = 1;
+
+    string user_id = 2;
+
+    string contact_id = 3;
+
+    uint64 created_at = 4;
+
+    uint64 updated_at = 5;
+
+    Profile contact_profile = 6;
+
+    message Profile {
+        string display_name = 1;
+    }
+}
+
+
+
+message User {
+    string id = 1;
+
+    string mobile = 2;
+
+    string profile_image = 3;
+
+    string display_name = 4;
+
+    bool registered = 5;
+
+    uint64 created_at = 6;
+
+    uint64 updated_at = 7;
+
+    string sign_image = 8;
+}
+
+
+message Bill {
+    string id = 1;
+
+    string image_url = 2;
+
+    string bill_from = 3;
+
+    string bill_to = 4;
+
+    uint64 created_at = 5;
+
+    uint64 updated_at = 6;
+
+    Agreement agreement = 7;
+
+}
+
+message Agreement {
+
+    string note = 1;
+
+    Status status = 2;
+
+    enum Status {
+        PENDING = 0;
+        ACKNOWLEDGED = 1;
+        DENIED = 2;
+    }
+
+}
+
+// api
+service API {
+
+    rpc ListContacts (ListContactsRequest) returns (ListContactsResponse) {
+    }
+
+    rpc GetContact (GetContactRequest) returns (GetContactResponse) {
+    }
+
+    rpc AddContact (AddContactRequest) returns (AddContactResponse) {
+    }
+
+    rpc UpdateContact (UpdateContactRequest) returns (UpdateContactResponse) {
+    }
+
+    rpc DeleteContact (DeleteContactRequest) returns (google.protobuf.Empty) {
+    }
+
+    rpc GetUser (GetUserRequest) returns (GetUserResponse) {
+    }
+
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+    }
+
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    }
+
+    rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty) {
+    }
+
+    rpc ListBills (ListBillsRequest) returns (ListBillsResponse) {
+    }
+
+    rpc CreateBill (CreateBillRequest) returns (CreateBillResponse) {
+    }
+
+    rpc GetBill (GetBillRequest) returns (GetBillResponse) {
+    }
+
+    rpc UpdateBill (UpdateBillRequest) returns (UpdateBillResponse) {
+    }
+
+    rpc DeleteBill (DeleteBillRequest) returns (google.protobuf.Empty) {
+    }
+
+    rpc GetUserByMobile (GetUserByMobileRequest) returns (GetUserByMobileResponse) {
+
+    }
+
+    rpc login(LoginRequest) returns (LoginResponse) {
+
+    }
+}
+
+message ListContactsRequest {
+    string user_id = 1;
+}
+
+message ListContactsResponse {
+    repeated User contacts = 1;
+}
+
+message AddContactRequest {
+    User contact = 1;
+    string user_id = 2;
+}
+
+message AddContactResponse {
+    User contact = 1;
+}
+
+message UpdateContactRequest {
+    User contact = 1;
+    string user_id = 2;
+}
+
+message UpdateContactResponse {
+    User contact = 1;
+}
+
+message DeleteContactRequest {
+    string user_id = 1;
+    string contact_id = 2;
+}
+
+message GetContactRequest {
+    string user_id = 1;
+    string contact_id = 2;
+}
+
+message GetContactResponse {
+    User contact = 1;
+}
+
+message ListBillsRequest {
+    string user_id = 1;
+    string contact_id = 2;
+}
+
+message ListBillsResponse {
+    repeated Bill bills = 1;
+}
+
+message CreateBillRequest {
+    Bill bill = 1;
+}
+
+message CreateBillResponse {
+    Bill bill = 1;
+}
+
+message UpdateBillRequest {
+    Bill bill = 1;
+}
+
+message UpdateBillResponse {
+    Bill bill = 1;
+}
+
+message DeleteBillRequest {
+    string bill_id = 1;
+}
+
+message CreateUserRequest {
+    User user = 1;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}
+
+message UpdateUserRequest {
+    User user = 1;
+    string user_id = 2;
+}
+
+message UpdateUserResponse {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+    string user_id = 1;
+}
+
+message GetUserRequest {
+    string user_id = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+message GetBillRequest {
+    string bill_id = 1;
+    string user_id = 2;
+}
+
+message GetBillResponse {
+    Bill bill = 1;
+}
+
+message GetUserByMobileRequest {
+    string mobile = 1;
+}
+
+message GetUserByMobileResponse {
+    User user = 1;
+}
+
+message LoginRequest {
+    string mobile = 1;
+    string name = 2;
+}
+
+message LoginResponse {
+    User user = 1;
+}
+
